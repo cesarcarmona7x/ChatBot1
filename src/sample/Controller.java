@@ -15,6 +15,7 @@ public class Controller {
     @FXML TextField tfPregunta;
     @FXML VBox conversacion;
     boolean encontropieza=false;
+    boolean dijistehola=false,preguntasteestado=false;
     String[] MARCAS={"Chevrolet","Nissan","BMW","Subaru","Toyota","Mitsubishi","Lamborghini","Audi","Plymouth","Dodge"};
     String[] MODELOS=generarModelos(2000,2020);
     String[] PIEZAS={"Motor","Llanta","Balata","Rin","Batería","Direccional","Filtro de aire","Espejo"};
@@ -73,23 +74,46 @@ public class Controller {
             else{
                 if(pregunta.toLowerCase().contains("hola")){
                     respuesta=String.format("Hola, %s.", System.getProperty("user.name"));
+                    dijistehola=true;
                 }
                 else if(pregunta.toLowerCase().contains("adios")||pregunta.toLowerCase().contains("adiós")){
-                    respuesta=String.format("Adiós, %s. Que tengas un buen día. Este programa se cerrará en 3 segundos.",System.getProperty("user.name"));
-                    Timer t=new Timer();
-                    t.schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            System.exit(0);
-                        }
-                    },3000);
+                    if(!dijistehola){
+                        respuesta="Míralo... se va sin siquiera decir hola. Me niego a cerrar el programa.";
+                    }
+                    else if(!preguntasteestado){
+                        respuesta="¿No vas a preguntar cómo me encuentro antes de salir? No tenía idea de que no te importase. Me niego a cerrar el programa";
+                    }
+                    else {
+                        respuesta = String.format("Adiós, %s. Que tengas un buen día. Este programa se cerrará en 3 segundos.", System.getProperty("user.name"));
+                        Timer t = new Timer();
+                        t.schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                System.exit(0);
+                            }
+                        }, 3000);
+                    }
                 }
                 else if(pregunta.toLowerCase().contains("como estas")||pregunta.toLowerCase().contains("cómo estás")){
-                    respuesta="Muy bien, ¿y tú? ¿Qué necesitabas?";
+                    if(!dijistehola){
+                        respuesta="¿No me vas a saludar? Lo primero que se hace al hablar con alguien es decir hola.";
+                    }
+                    else {
+                        respuesta = "Muy bien, ¿y tú? ¿Qué necesitabas?";
+                        preguntasteestado = true;
+                    }
                 }
                 else if(pregunta.toLowerCase().contains("pieza")){
-                    respuesta="Pregunta lo que quieras sobre piezas; estaré escuchando. Introduce marca, modelo y nombre de la pieza.";
-                    encontropieza=true;
+                    if(!dijistehola){
+                        respuesta+="No te voy a atender hasta que no me saludes.";
+                    }
+                    else if(!preguntasteestado){
+                        respuesta+="No te voy a atender hasta que no me preguntes cómo estoy. Míralo... de seguro ni te importo.";
+                    }
+                    else {
+                        respuesta = "Pregunta lo que quieras sobre piezas; estaré escuchando. Introduce marca, modelo y nombre de la pieza.";
+                        encontropieza = true;
+                    }
                 }
                 else{
                     respuesta="Disculpa. Eso no se encuentra dentro de mi programación.";
