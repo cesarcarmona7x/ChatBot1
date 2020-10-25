@@ -1,0 +1,15 @@
+*{
+    -fx-text-fill:white;
+    -fx-background: black;
+}
+.text-field{
+    -fx-background-color:rgb(128,128,128);
+    -fx-effect: innershadow( gaussian,rgba(0,0,0,0.5),10,0,5,5);
+}
+.viewport{
+    -fx-background-color:rgb(128,128,128);
+    -fx-effect: innershadow( gaussian,rgba(0,0,0,0.5),10,0,5,5);
+}
+.title{
+    -fx-font: 24pt "Kristen ITC";
+}
